@@ -1,4 +1,4 @@
-This patch removes the rather arbitrary PXE boot restriction from Non-Site Editions of MemTest86.
+These patches remove the rather arbitrary PXE boot restriction from Non-Site Editions of MemTest86.
 
 Tested to work on versions: 8.1, 8.2, 8.3, 9.0, 9.2
 
@@ -44,5 +44,5 @@ Note: This patch is for the ARM64 executable:
 Find:    0x21603E9160003FD6200200B5
 Replace: 0x21603E9160003FD611000014
 
-Don't forget to regenererate the PE executable file signature, as some EFI implementations check it.
+Don't forget to regenererate the PE executable file signature as some EFI implementations check it.
 Obviously, patched executables won't work on machines with Secure Boot enabled, disable it before wasting your time.
