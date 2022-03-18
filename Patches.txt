@@ -1,6 +1,6 @@
 These patches remove the rather arbitrary PXE boot restriction from Non-Site Editions of MemTest86.
 
-Tested to work on versions: 8.1, 8.2, 8.3, 9.0, 9.2
+Tested to work on versions: 8.1, 8.2, 8.3, 9.0, 9.2, 9.3, 9.4
 
 PXE_Check_x64:
 .text:0x0000000000000628 : 48 8B 05 A1 1A 15 00 : mov 0x151AA1(%rip), %rax
@@ -21,17 +21,6 @@ PXE_Check_x86:
 .text:0x000003D9 : 85 C0          : test %eax, %eax
 .text:0x000003DB : 75 47          : jne 0x424
 
-PXE_Check_ARM64:
-.text:0x0000000000057CF8 : A1 FA 44 F9 : ldr x1, [x21, #0x9F0]
-.text:0x0000000000057CFC : E2 05 00 F0 : adrp x2, #0xBF000
-.text:0x0000000000057D00 : 00 0C 40 F9 : ldr x0, [x0, #0x18]
-.text:0x0000000000057D04 : 42 80 0C 91 : add x2, x2, #0x320
-.text:0x0000000000057D08 : 23 4C 40 F9 : ldr x3, [x1, #0x98]
-.text:0x0000000000057D0C : 61 05 00 D0 : adrp x1, #0xAE000
-.text:0x0000000000057D10 : 21 60 3E 91 : add x1, x1, #0xF98
-.text:0x0000000000057D14 : 60 00 3F D6 : blr x3
-.text:0x0000000000057D18 : 20 02 00 B5 : cbnz x0, #0x44
-
 Note: This patch is for the x64 executable:
 Find:    0xFF90980000004885C07542
 Replace: 0xFF90980000004885C0EB42
@@ -40,9 +29,5 @@ Note: This patch is for the x86 executable:
 Find:    0xFF505883C40C85C07547
 Replace: 0xFF505883C40C85C0EB47
 
-Note: This patch is for the ARM64 executable:
-Find:    0x21603E9160003FD6200200B5
-Replace: 0x21603E9160003FD611000014
-
-Don't forget to regenererate the PE executable file signature as some EFI implementations check it.
-Obviously, patched executables won't work on machines with Secure Boot enabled, disable it before wasting your time.
+Regenerate the executable signature, some firmware vendors verify it.
+Patched executables won't work on machines with Secure Boot enabled.
